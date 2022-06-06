@@ -18,6 +18,9 @@
                     <small class="text-muted"><%=campground.location%></small>
                 </p>
                 <a class="btn btn-primary" href="/campgrounds/<%=campground._id%>">View <%=campground.title%></a>
+                <form class="d-inline" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                    </form>
             </div>
         </div>
     </div>
