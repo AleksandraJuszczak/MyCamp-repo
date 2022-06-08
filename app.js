@@ -6,9 +6,14 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user')
 
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const userRoutes = require('./routes/users');
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
+
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp');
 
@@ -44,14 +49,35 @@ const sessionConfig={
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate())) //adds the strategy and specifies the authentication method
+
+passport.serializeUser(User.serializeUser()); //serialization is about how we store the user in session
+passport.deserializeUser(User.deserializeUser()); //deserialization is about how we get the user out of the session
+
+
 app.use((req,res,next)=>{
+    console.log(req.session);
+    if(!['/login','/'].includes(req.originalUrl)){
+        req.session.returnTo = req.originalUrl;
+    }
+    res.locals.currentUser = req.user; //it'll be available on all the requests and it'll let us get the information if and who is signed in
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:id/reviews', reviews);
+// app.get('/fakeUser', async(req,res)=>{
+//     const user = new User({email: 'ha@gmail.com', username:'haha'});
+//     const newUser = await User.register(user, 'SomePassword');
+//     res.send(newUser);
+// })
+
+
+app.use('/', userRoutes);
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/reviews', reviewRoutes);
 
 app.get('/',(req,res)=>{
     res.render('home')
