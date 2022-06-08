@@ -1,8 +1,8 @@
 <% layout('layouts/boilerplate')%>
     <h1>All Campgrounds</h1>
-    <div>
+    <!-- <div>
         <a href="/campgrounds/new">Add Campground</a>
-    </div>
+    </div> -->
     <ul id="straight-ul">
         <%for (let campground of campgrounds){%>
 <div class="card mb-3">
@@ -18,9 +18,9 @@
                     <small class="text-muted"><%=campground.location%></small>
                 </p>
                 <a class="btn btn-primary" href="/campgrounds/<%=campground._id%>">View <%=campground.title%></a>
-                <form class="d-inline" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
+                <!-- <form class="d-inline" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
-                    </form>
+                    </form> -->
             </div>
         </div>
     </div>
