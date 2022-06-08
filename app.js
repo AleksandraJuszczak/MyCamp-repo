@@ -13,6 +13,7 @@ const User = require('./models/user')
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
+const e = require('connect-flash');
 
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp');
@@ -58,10 +59,11 @@ passport.deserializeUser(User.deserializeUser()); //deserialization is about how
 
 
 app.use((req,res,next)=>{
-    console.log(req.session);
-    if(!['/login','/'].includes(req.originalUrl)){
+    console.log(req.originalUrl);
+    if(!['/login','/register','/'].includes(req.originalUrl) && req.originalUrl !== '/xxx'){
         req.session.returnTo = req.originalUrl;
-    }
+    } 
+    console.log(req.session);
     res.locals.currentUser = req.user; //it'll be available on all the requests and it'll let us get the information if and who is signed in
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
