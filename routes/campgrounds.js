@@ -24,8 +24,14 @@ router.post('/', isLoggedIn, validateCampground, catchAsync(async(req,res,next)=
     res.redirect(`/campgrounds/${campground._id}`)
 }));
 router.get('/:id', catchAsync(async(req,res)=>{
-    const campground = await (await Campground.findById(req.params.id).populate('reviews')).populate('author');
-    console.log(campground);
+    const campground = await Campground.findById(req.params.id).populate({
+       path: 'reviews',
+       populate:{
+           path: 'author',
+        //    select: 'username'
+       }
+    }).populate('author');
+    // console.log(campground.reviews);
     if(!campground){
         req.flash('error',`Cannot find that campground`);
         return res.redirect('/campgrounds');
