@@ -3,6 +3,9 @@ const router = express.Router({mergeParams:true});
 const campgrounds = require('../controllers/campgrounds');
 const catchAsync = require('../utils/catchAsync');
 const {isLoggedIn, validateCampground, isAuthor} = require('../middleware')
+const multer  = require('multer');
+const {storage} = require('../cloudinary');  //Node automatically looks for index.js so we don't need to write /index
+const upload = multer({ storage });
 
 const Campground = require('../models/campground');
 
@@ -10,8 +13,11 @@ router.route('/')
     .get(catchAsync(campgrounds.index))
     .post(
         isLoggedIn, 
+        upload.array('image'),
         validateCampground, 
         catchAsync(campgrounds.createCampground))
+    
+
 
 router.get('/new',
     isLoggedIn, 
