@@ -8,7 +8,10 @@ const Review = require('../models/review');
 const catchAsync = require('../utils/catchAsync');
 
 
-router.post('/', isLoggedIn, validateReview, catchAsync(reviews.createReview))
+router.post('/', 
+    isLoggedIn, 
+    validateReview, 
+    catchAsync(reviews.createReview))
  
  router.delete('/:reviewId',
     isLoggedInDelete,
