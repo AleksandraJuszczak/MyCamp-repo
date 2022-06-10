@@ -7,7 +7,8 @@ module.exports.campgroundSchema = Joi.object({
         // image: Joi.string().required(),
         location: Joi.string().required(),
         description: Joi.string().required(),
-    }).required()
+    }).required(),
+    deleteImages: Joi.array() //see also: views/campgrounds/edit.ejs
 });
 
 module.exports.reviewSchema = Joi.object({
