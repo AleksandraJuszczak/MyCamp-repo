@@ -19,7 +19,7 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp');
+mongoose.connect('mongodb://localhost:27017/my-camp');
 
 // bind() lets you create a new function with its this value set to a provided value
 // Because browser implementations require that console.error()’s this value be set to
