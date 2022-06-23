@@ -14,6 +14,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user')
 
+const mongoSanitize = require('express-mongo-sanitize');
+
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
@@ -39,6 +41,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(mongoSanitize());   //including mongoSanitize() disallows sending some queries, e.g.including $
+app.use(
+    mongoSanitize({
+      replaceWith: '_',
+    }),
+  );                            //you can also replace the forbidden signs in queries with something else this way
+
 const sessionConfig={
     secret: 'thisshouldbeabettersecret!',
     resave: false,
@@ -62,6 +71,7 @@ passport.deserializeUser(User.deserializeUser()); //deserialization is about how
 
 
 app.use((req,res,next)=>{
+    console.log(req.query);
     // console.log(req.originalUrl);
     if(!['/login','/register','/'].includes(req.originalUrl) && req.originalUrl !== '/xxx'){ 
         req.session.returnTo = req.originalUrl;
