@@ -12,7 +12,8 @@ const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const User = require('./models/user')
+const User = require('./models/user');
+// const helmet = require('helmet');   //Helmet helps secure the Express apps by setting various HTTP headers
 
 const mongoSanitize = require('express-mongo-sanitize');
 
@@ -49,18 +50,76 @@ app.use(
   );                            //you can also replace the forbidden signs in queries with something else this way
 
 const sessionConfig={
+    name: 'session',     //to not use the default name(better for security)
     secret: 'thisshouldbeabettersecret!',
     resave: false,
     saveUninitialized: true,
     cookie: {
-      
         httpOnly: true,     // for extra security (it actually defaults to true)
+        // secure: true,   //the cookies can only be configured through https
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
 app.use(session(sessionConfig));
 app.use(flash());
+
+// NEED TO CHECK THE FOLLOWING:
+// app.use(helmet());
+
+// const scriptSrcUrls = [
+//     "https://stackpath.bootstrapcdn.com/",
+//     "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css",
+//     // "https://api.tiles.mapbox.com/",
+//     // "https://api.mapbox.com/",
+//     "https://kit.fontawesome.com/",
+//     "https://kit-free.fontawesome.com/ https://stackpath.bootstrapcdn.com/ https://fonts.googleapis.com/ https://use.fontawesome.com/",
+//     "https://cdnjs.cloudflare.com/",
+//     "https://res.cloudinary.com/",
+//     "https://cdn.jsdelivr.net",
+// ];
+// const styleSrcUrls = [
+//     "https://kit-free.fontawesome.com/",
+//     "https://kit-free.fontawesome.com/ https://stackpath.bootstrapcdn.com/ https://fonts.googleapis.com/ https://use.fontawesome.com/",
+//     "https://stackpath.bootstrapcdn.com/",
+//     "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css",
+//     // "https://api.mapbox.com/",
+//     // "https://api.tiles.mapbox.com/",
+//     "https://fonts.googleapis.com/",
+//     "https://use.fontawesome.com/",
+// ];
+// // const connectSrcUrls = [
+// //     "https://api.mapbox.com/",
+// //     "https://a.tiles.mapbox.com/",
+// //     "https://b.tiles.mapbox.com/",
+// //     "https://events.mapbox.com/",
+// // ];
+// const fontSrcUrls = [];
+// app.use(
+//     helmet.contentSecurityPolicy({
+//         directives: {
+//             defaultSrc: [],
+//             // connectSrc: ["'self'", ...connectSrcUrls],
+//             scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+//             styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+//             workerSrc: ["'self'", "blob:"],
+//             objectSrc: [],
+//             imgSrc: [
+//                 "'self'",
+//                 "blob:",
+//                 "data:",
+//                 "https://res.cloudinary.com/douqbebwk/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+//                 "https://images.unsplash.com/",
+//             ],
+//             fontSrc: ["'self'", ...fontSrcUrls],
+//         },
+//     })
+// );
+
+
+// app.use(helmet({crossOriginEmbedderPolicy: 'unsafe-none', 
+// crossOriginResourcePolicy: {directives: {frameAncestors: ["'none'"]  }}})); 
+//helmet() enables all 11 of the middleware that he;met comes with
 
 app.use(passport.initialize());
 app.use(passport.session())
@@ -71,7 +130,7 @@ passport.deserializeUser(User.deserializeUser()); //deserialization is about how
 
 
 app.use((req,res,next)=>{
-    console.log(req.query);
+    // console.log(req.query);
     // console.log(req.originalUrl);
     if(!['/login','/register','/'].includes(req.originalUrl) && req.originalUrl !== '/xxx'){ 
         req.session.returnTo = req.originalUrl;
