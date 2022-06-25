@@ -39,7 +39,7 @@ body{
   color: #000;
 }
 
-.navbar{
+.navbar-fixed-line{
   position:fixed !important;
   width: 100vw !important;
   z-index: 999;
@@ -55,6 +55,7 @@ body{
   margin-bottom: 0.5rem !important;
   margin-right: 1.5rem;
 }
+
 
 .nav-link:link, .nav-link:visited {
   color: rgba(255, 255, 255, 0.55) !important;
@@ -72,13 +73,23 @@ body{
   color: rgba(255, 255, 255, 0.8) !important;
   font-weight: 600;
   border-bottom: 0.15rem solid transparent;
-  margin-right: 1.5rem;
   transition: all 0.3s;
 }
 
 .nav-link-log:hover, .nav-link-log:active {
   color: rgba(255, 255, 255) !important;
   border-bottom: 0.15rem solid;
+}
+
+/* Why after closing mobile nav, log part stays longer visible?!*/
+.log-position{
+  margin-top: 0.6rem !important;
+  position:absolute;
+  right: 0;
+}
+.log-link-position{
+  margin-right: 2.5rem;
+  align-self: flex-end;
 }
 
 #straight-ul {

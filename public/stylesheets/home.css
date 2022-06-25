@@ -16,6 +16,19 @@ body{
     max-width: 60vw;
 }
 
+.nav-right{
+    float: inline-end !important;
+}
+
+.nav-position{
+    margin-top: 0.4rem !important;
+    position:absolute;
+    right: 0;
+}
+.nav-link-position{
+    margin-right: 1.7rem;
+    align-self: flex-end;
+}
 .nav-link:link, .nav-link:visited{
     padding: 0.25rem 0;
     font-size: 1.2rem;
