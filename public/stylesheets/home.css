@@ -1,8 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-  }
-
 body{
     height: 100vh;
     font-family: Inter, sans-serif;
@@ -12,23 +7,14 @@ body{
     text-shadow: 0 0.1rem 0.1rem rgba(0,0,0,0.5);
     box-shadow: inset 0 5rem 10rem rgba(0,0,0,0.6);
 }   
+
 .cover-container{
-    max-width: 60vw;
+    max-width: 100vw;
 }
 
-.nav-right{
-    float: inline-end !important;
-}
+/* NAVBAR *********************************/
+/*  check also general.css */
 
-.nav-position{
-    margin-top: 0.4rem !important;
-    position:absolute;
-    right: 0;
-}
-.nav-link-position{
-    margin-right: 1.7rem;
-    align-self: flex-end;
-}
 .nav-link:link, .nav-link:visited{
     padding: 0.25rem 0;
     font-size: 1.2rem;
@@ -42,13 +28,17 @@ body{
     color: rgb(255,255,255);
     border-bottom-color: rgba(255,255,255, 0.7);
 }
-.btn-secondary:link, .btn-secondary:visited{
+
+/* BUTTON */
+
+.btn-view:link, .btn-view:visited{
     color: #333 !important;
     text-shadow: none;
     border:none !important;
     transition: all 0.3s;
 }
-.btn-secondary:hover, .btn-secondary:active{
+
+.btn-view:hover, .btn-view:active{
     color: rgb(255, 255, 255) !important;
     background-color: rgba(37, 37, 37, 0.5) !important;
     text-shadow: none;
