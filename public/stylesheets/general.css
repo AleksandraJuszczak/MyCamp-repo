@@ -39,6 +39,15 @@ body{
 
 /* NAVBAR ***************************************/
 
+.mycamp-1{
+  font-weight:700;
+  letter-spacing:0.05em;
+}
+
+.nav-position{
+  margin-top: 0.3rem !important;
+}
+
 .navbar-fixed-line{
   position:fixed !important;
   width: 100vw !important;
@@ -82,7 +91,7 @@ body{
 
 /* Why after closing mobile nav, log part stays longer visible?!*/
 .log-position{
-  margin-top: 0.6rem !important;
+  margin-top: 0.3rem !important;
   position:absolute;
   right: 0;
 }

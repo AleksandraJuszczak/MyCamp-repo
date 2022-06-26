@@ -29,18 +29,23 @@ body{
     border-bottom-color: rgba(255,255,255, 0.7);
 }
 
+.mycamp{
+    font-weight:700;
+    letter-spacing:0.05em;
+    margin-bottom: 1rem;
+}
+
 /* BUTTON */
 
-.btn-view:link, .btn-view:visited{
+.btn-view{
     color: #333 !important;
-    text-shadow: none;
-    border:none !important;
+    background-color: #fff !important;
+    text-shadow: none !important;
+    border: none !important;
     transition: all 0.3s;
 }
 
 .btn-view:hover, .btn-view:active{
     color: rgb(255, 255, 255) !important;
-    background-color: rgba(37, 37, 37, 0.5) !important;
-    text-shadow: none;
-    
+    background-color: rgba(37, 37, 37, 0.5) !important;    
 }
